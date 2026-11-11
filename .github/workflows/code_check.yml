@@ -2,9 +2,9 @@ name: Code Check
 
 on:
   push:
-    branches: [kawasaki/develop, fukuoka-city/develop]
+    branches: [kawasaki/develop, yashio-city-develop]
   pull_request:
-    branches: [kawasaki/develop, fukuoka-city/develop]
+    branches: [kawasaki/develop, yashio-city-develop]
 
 jobs:
   lint-and-typecheck:

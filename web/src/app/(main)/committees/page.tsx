@@ -3,7 +3,7 @@ import { CommitteesView } from "@/features/committee-minutes/server/components/c
 import { getCommitteeArchives } from "@/features/committee-minutes/server/loaders/get-committee-archives";
 
 export const metadata = {
-  title: "委員会で話し合われたこと | 福岡市議会",
+  title: "委員会で話し合われたこと | 八潮市議会",
 };
 
 export default async function CommitteesPage() {

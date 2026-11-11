@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 import { spawn } from "node:child_process";
 import * as fs from "node:fs/promises";
@@ -56,6 +57,12 @@ export function executeClaudeToFile(
   _outputFilePath: string
 ): Promise<void> {
   return new Promise((resolve, reject) => {
+    try {
+      assertAiEnabled();
+    } catch (error) {
+      reject(error);
+      return;
+    }
     // CLAUDECODE を unset: Claude CLI はネスト起動を検出してブロックするため
     const env = { ...process.env };
     delete env.CLAUDECODE;

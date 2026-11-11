@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 
 const navigationLinks = [
@@ -10,7 +11,9 @@ const navigationLinks = [
   { href: "/tags", label: "タグ管理" },
   { href: "/factions", label: "会派管理" },
   { href: "/committees", label: "委員会管理" },
-  { href: "/ai-collection", label: "AI情報収集" },
+  ...(siteConfig.features.ai
+    ? [{ href: "/ai-collection", label: "AI情報収集" }]
+    : []),
   { href: "/admins", label: "管理者" },
 ];
 

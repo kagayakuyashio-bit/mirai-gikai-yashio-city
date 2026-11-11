@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { generateObject } from "ai";
@@ -31,6 +32,7 @@ export async function classifyOpinions(
   topicNames: string[],
   billTitle: string
 ): Promise<ClassificationResult[]> {
+  assertAiEnabled();
   const batches = chunk(opinions, TOPIC_ANALYSIS_BATCH_SIZE);
   const allClassifications: ClassificationResult[] = [];
 

@@ -6,7 +6,7 @@ export type CommitteeType =
   | "audit"
   | "management";
 
-/** 発言セグメントの種別（福岡市は発言者名が無い匿名・要約形式） */
+/** 発言セグメントの種別（発言者名が無い匿名・要約形式の場合がある） */
 export type SpeakerType =
   | "member" // 委員の質疑・意見
   | "executive" // 執行部の答弁

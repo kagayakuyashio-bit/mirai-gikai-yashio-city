@@ -9,7 +9,7 @@ export type TranscriptSection = {
 
 /**
  * 発言セグメント一覧を議題の範囲（startVoiceNo〜endVoiceNo は seq を指す）で分割する。
- * 福岡市の議事録は通常議題を持たないため、その場合は全体を1セクションにまとめる。
+ * 要約形式の議事録は通常議題を持たないため、その場合は全体を1セクションにまとめる。
  */
 export function buildTranscriptSections(
   speeches: CommitteeSpeech[],

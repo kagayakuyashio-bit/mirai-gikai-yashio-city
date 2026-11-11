@@ -5,7 +5,6 @@ node_modules
 .vscode
 
 # sample files
-docs/fukuoka/sample/
 
 # env files
 .env

@@ -4,26 +4,26 @@
  * @see docs/kawasaki/20260304_1000_別地域向けfork手順.md
  */
 export const siteConfig = {
-  siteName: "みらい議会＠福岡市",
+  siteName: "みらい議会＠八潮市",
   siteDescription:
-    "福岡市議会で今どんな議案が検討されているか、わかりやすく伝えるプラットフォームです",
-  cityName: "福岡市",
-  councilName: "福岡市議会",
+    "八潮市議会で今どんな議案が検討されているか、わかりやすく伝えるプラットフォームです",
+  cityName: "八潮市",
+  councilName: "八潮市議会",
   keywords: [
-    "みらい議会ー福岡市版",
+    "みらい議会ー八潮市版",
     "議案",
-    "福岡市",
+    "八潮市",
     "市議会",
     "地方政治",
     "政策",
     "解説",
   ],
-  councilBaseUrl: "https://gikai.city.fukuoka.lg.jp/",
+  councilBaseUrl: "https://www.city.yashio.lg.jp/gikai/index.html",
   /** 議案・議決結果の一覧ページ */
-  councilBillsDetailUrl: "https://gikai.city.fukuoka.lg.jp/result/result/",
-  twitterHashtag: "みらい議会福岡市版", // # なし
+  councilBillsDetailUrl: "https://www.city.yashio.lg.jp/gikai/jokyo/index.html",
+  twitterHashtag: "みらい議会八潮市版", // # なし
   externalLinks: {
-    report: "https://forms.gle/PbZdpdRzTrsAuDST7",
+    report: "",
     aboutNote: "",
     donation: "https://team-mir.ai/support/donation",
     teamAbout: "https://team-mir.ai/about",
@@ -41,10 +41,10 @@ export const siteConfig = {
    * 利用規約や問い合わせ先に使用します。
    */
   operator: {
-    name: "バクモン" as string,
-    contactUrl: "https://x.com/bakumon0907" as string,
+    name: "【仮】八潮市（運営者情報は公開前に差し替え）" as string,
+    contactUrl: "" as string,
     /** 利用規約の準拠法・管轄裁判所（第一審の専属的合意管轄） */
-    jurisdiction: "福岡地方裁判所" as string,
+    jurisdiction: "【仮】さいたま地方裁判所（公開前に要確認）" as string,
   },
   /**
    * AI機能の有効/無効設定

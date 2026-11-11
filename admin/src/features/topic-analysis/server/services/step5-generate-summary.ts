@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { generateObject } from "ai";
@@ -21,6 +22,7 @@ export async function generateOverallSummary(
   totalOpinionsCount: number,
   totalSessionsCount: number
 ): Promise<string> {
+  assertAiEnabled();
   const topicsList = topics
     .map(
       (t, i) =>

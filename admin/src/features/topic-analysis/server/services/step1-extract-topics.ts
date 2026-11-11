@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { generateObject } from "ai";
@@ -26,6 +27,7 @@ export async function extractTopics(
   billTitle: string,
   billSummary: string
 ): Promise<string[]> {
+  assertAiEnabled();
   const batches = chunk(opinions, TOPIC_ANALYSIS_BATCH_SIZE);
   const allTopics: string[] = [];
 

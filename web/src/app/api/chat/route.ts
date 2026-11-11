@@ -1,4 +1,5 @@
 import { simulateReadableStream, type UIMessage } from "ai";
+import { siteConfig } from "@/config/site.config";
 import { getChatSupabaseUser } from "@/features/chat/server/utils/supabase-server";
 import {
   type ChatMessageMetadata,
@@ -48,6 +49,13 @@ async function _mockResponse(_req: Request) {
 }
 
 export async function POST(req: Request) {
+  if (!siteConfig.features.aiChat) {
+    return new Response(JSON.stringify({ error: "Not found" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   // Vercel node環境でinstrumentationが自動で起動しない問題対応
   // 明示的にtelemetryを初期化
   await registerNodeTelemetry();

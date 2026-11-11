@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { siteConfig } from "@/config/site.config";
 import { enrichBillContents } from "../../actions/enrich-bill-contents";
 import { updateBillContents } from "../../server/actions/update-bill-contents";
 import type { Bill } from "../../shared/types";
@@ -139,25 +140,27 @@ export function BillContentsEditForm({
             <CardTitle>議案コンテンツ編集</CardTitle>
             <p className="text-sm text-gray-600 mt-1">{bill.name}</p>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleEnrich}
-            disabled={isEnriching || isSubmitting}
-            className="shrink-0"
-          >
-            {isEnriching ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Web検索中...
-              </>
-            ) : (
-              <>
-                <Search className="mr-2 h-4 w-4" />
-                Web検索で補完
-              </>
-            )}
-          </Button>
+          {siteConfig.features.ai && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleEnrich}
+              disabled={isEnriching || isSubmitting}
+              className="shrink-0"
+            >
+              {isEnriching ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Web検索中...
+                </>
+              ) : (
+                <>
+                  <Search className="mr-2 h-4 w-4" />
+                  Web検索で補完
+                </>
+              )}
+            </Button>
+          )}
         </div>
         {isEnriching && (
           <p className="text-xs text-gray-500 mt-2">

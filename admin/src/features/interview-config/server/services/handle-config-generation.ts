@@ -3,6 +3,7 @@ import "server-only";
 import { convertToModelMessages, Output, streamText } from "ai";
 import { getBillById } from "@/features/bills-edit/server/loaders/get-bill-by-id";
 import { getBillContents } from "@/features/bills-edit/server/loaders/get-bill-contents";
+import { assertAiEnabled } from "@/lib/ai-guard";
 import { AI_MODELS } from "@/lib/ai/models";
 import { injectJsonFields } from "@/lib/stream/inject-json-fields";
 import {
@@ -38,6 +39,7 @@ export async function handleConfigGeneration({
   existingThemes,
   existingQuestions,
 }: HandleConfigGenerationParams) {
+  assertAiEnabled();
   const [bill, billContents, config] = await Promise.all([
     getBillById(billId),
     getBillContents(billId),

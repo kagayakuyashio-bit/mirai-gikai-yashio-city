@@ -2,6 +2,7 @@
 
 import { spawn } from "node:child_process";
 import { createAdminClient } from "@mirai-gikai/supabase";
+import { assertAiEnabled } from "@/lib/ai-guard";
 import { requireAdmin } from "@/features/auth/server/lib/auth-server";
 import {
   EVAL_BATCH_SIZE,
@@ -27,6 +28,12 @@ export type AutoFeatureResult = {
 
 function callClaude(prompt: string): Promise<string> {
   return new Promise((resolve, reject) => {
+    try {
+      assertAiEnabled();
+    } catch (error) {
+      reject(error);
+      return;
+    }
     const env = { ...process.env };
     delete env.CLAUDECODE;
     delete env.CLAUDE_CODE;

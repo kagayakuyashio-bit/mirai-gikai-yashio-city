@@ -66,12 +66,12 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
     id: "q-001",
     council_session_id: "session-r7-5",
     questioner_name: "山田ゆみこ",
-    questioner_party: "福岡市民クラブ",
+    questioner_party: "市民クラブ",
     questioner_number: 1,
     session_day: 1,
     question_order: 1,
     summary:
-      "子育て支援の充実・市営スポーツ施設の老朽化対策・漁港の管理体制について質問した。",
+      "子育て支援の充実・市営スポーツ施設の老朽化対策・水路の管理体制について質問した。",
     topics: [
       {
         title: "保育所の待機児童対策",
@@ -92,11 +92,11 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
         answerer_name: "舟越伸一",
       },
       {
-        title: "漁港の管理体制の強化",
+        title: "水路の管理体制の強化",
         question_summary:
-          "能古島・志賀島の漁港施設の老朽化が進んでいるが、修繕計画と地元漁協との連携状況はどうか。",
+          "市内の水路施設の老朽化が進んでいるが、修繕計画と地元との連携状況はどうか。",
         answer_summary:
-          "年次点検に基づき優先度の高い箇所から順次修繕を実施。地元漁協と定期的な協議の場を設け、現場ニーズを計画に反映している。",
+          "年次点検に基づき優先度の高い箇所から順次修繕を実施。地元と定期的な協議の場を設け、現場ニーズを計画に反映している。",
         answerer_role: "農林水産局長",
         answerer_name: "坂本健二",
       },
@@ -111,17 +111,17 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
     id: "q-002",
     council_session_id: "session-r7-5",
     questioner_name: "堀内徹夫",
-    questioner_party: "自民党福岡市議団",
+    questioner_party: "自民党市議団",
     questioner_number: 2,
     session_day: 1,
     question_order: 2,
     summary:
-      "福岡市の防災・減災対策と、能登半島地震を踏まえた木造密集市街地の耐震化促進について質問した。",
+      "八潮市の防災・減災対策と、能登半島地震を踏まえた木造密集市街地の耐震化促進について質問した。",
     topics: [
       {
         title: "木造密集市街地の耐震化促進",
         question_summary:
-          "能登半島地震の教訓を踏まえ、博多区・中央区の木造密集市街地における耐震診断・改修の補助制度拡充を求める。",
+          "能登半島地震の教訓を踏まえ、市内の木造密集市街地における耐震診断・改修の補助制度拡充を求める。",
         answer_summary:
           "令和8年度から耐震改修補助の上限額を100万円から150万円に引き上げ。無料耐震診断の周知強化と戸別訪問も実施する。",
         answerer_role: "住宅都市局長",
@@ -147,7 +147,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
     id: "q-003",
     council_session_id: "session-r7-5",
     questioner_name: "中山郁美",
-    questioner_party: "公明党福岡市議団",
+    questioner_party: "公明党市議団",
     questioner_number: 3,
     session_day: 2,
     question_order: 1,
@@ -228,17 +228,16 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
     id: "q-005",
     council_session_id: "session-r7-5",
     questioner_name: "倉元達朗",
-    questioner_party: "自民党福岡市議団",
+    questioner_party: "自民党市議団",
     questioner_number: 5,
     session_day: 3,
     question_order: 1,
-    summary:
-      "福岡空港の機能強化・都心部の渋滞対策・地下鉄七隈線延伸について質問した。",
+    summary: "駅周辺の渋滞対策・公共交通の充実・道路整備について質問した。",
     topics: [
       {
-        title: "福岡空港第2滑走路の運用開始後の課題",
+        title: "道路整備の進捗と周辺環境への配慮",
         question_summary:
-          "第2滑走路運用開始後の騒音問題への対応と、周辺住民への説明状況を問う。",
+          "道路整備に伴う騒音問題への対応と、周辺住民への説明状況を問う。",
         answer_summary:
           "騒音測定局を新たに3カ所追加設置。住民説明会を年4回開催し、防音工事助成の対象区域拡大も検討中。",
         answerer_role: "市長",
@@ -247,7 +246,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
       {
         title: "都心部の慢性的渋滞解消",
         question_summary:
-          "博多駅周辺の渋滞が慢性化している。信号制御の最適化とパークアンドライドの拡充策を問う。",
+          "駅周辺の渋滞が慢性化している。信号制御の最適化とパークアンドライドの拡充策を問う。",
         answer_summary:
           "AIを活用した信号制御最適化を令和8年度から主要交差点30カ所に導入。パークアンドライド駐車場を2カ所新設予定。",
         answerer_role: "道路下水道局長",
@@ -264,7 +263,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
     id: "q-006",
     council_session_id: "session-r7-5",
     questioner_name: "天野こう",
-    questioner_party: "日本共産党福岡市議団",
+    questioner_party: "日本共産党市議団",
     questioner_number: 6,
     session_day: 3,
     question_order: 2,
@@ -274,7 +273,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
       {
         title: "国民健康保険料の引き下げ",
         question_summary:
-          "福岡市の国保料は政令市の中でも高水準。一般会計からの繰り入れを増やし引き下げを求める。",
+          "八潮市の国保料は県内でも高水準。一般会計からの繰り入れを増やし引き下げを求める。",
         answer_summary:
           "国保の財政運営は都道府県単位に移行しており、市単独での引き下げは困難。国・県への要請を続ける。",
         answerer_role: "保健医療局長",

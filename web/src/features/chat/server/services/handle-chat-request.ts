@@ -1,3 +1,4 @@
+import { assertAiChatEnabled } from "@/lib/ai-guard";
 import { openai } from "@ai-sdk/openai";
 import type { Database } from "@mirai-gikai/supabase";
 import {
@@ -72,6 +73,7 @@ export async function handleChatRequest({
   userId,
   deps,
 }: ChatRequestParams) {
+  assertAiChatEnabled();
   const promptProvider = deps?.promptProvider ?? createPromptProvider();
 
   // Extract context from messages
@@ -251,7 +253,7 @@ function buildBudgetPrompt(context: ChatMessageMetadata) {
       })
       .join("\n\n") ?? "";
 
-  const content = `あなたは福岡市の予算概要を市民にわかりやすく説明するAIアシスタントです。
+  const content = `あなたは八潮市の予算概要を市民にわかりやすく説明するAIアシスタントです。
 
 ## 対象局の情報
 - 局名: ${budget?.departmentName ?? ""}

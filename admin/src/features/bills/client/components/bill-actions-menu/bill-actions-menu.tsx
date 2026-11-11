@@ -1,5 +1,6 @@
 "use client";
 
+import { siteConfig } from "@/config/site.config";
 import {
   BarChart3,
   Edit,
@@ -45,24 +46,40 @@ export function BillActionsMenu({ billId, billName }: BillActionsMenuProps) {
               コンテンツ
             </Button>
           </Link>
-          <Link href={`/bills/${billId}/interview`}>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              インタビュー設定
-            </Button>
-          </Link>
-          <Link href={`/bills/${billId}/reports`}>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <BarChart3 className="h-4 w-4 mr-2" />
-              レポート一覧
-            </Button>
-          </Link>
-          <Link href={`/bills/${billId}/topic-analysis`}>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <Sparkles className="h-4 w-4 mr-2" />
-              トピック解析
-            </Button>
-          </Link>
+          {siteConfig.features.ai && (
+            <>
+              <Link href={`/bills/${billId}/interview`}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  インタビュー設定
+                </Button>
+              </Link>
+              <Link href={`/bills/${billId}/reports`}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                >
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  レポート一覧
+                </Button>
+              </Link>
+              <Link href={`/bills/${billId}/topic-analysis`}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  トピック解析
+                </Button>
+              </Link>
+            </>
+          )}
           <div className="my-1 border-t" />
           <DuplicateBillButton billId={billId} billName={billName} />
           <DeleteBillButton billId={billId} billName={billName} />

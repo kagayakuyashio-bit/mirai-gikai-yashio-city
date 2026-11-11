@@ -52,7 +52,7 @@ describe("assignCategory", () => {
     ).toBe("高齢者・福祉");
   });
   it("回遊性 → 交通・まちづくり", () => {
-    expect(assignCategory("天神北エリアの回遊性向上").label).toBe(
+    expect(assignCategory("駅前エリアの回遊性向上").label).toBe(
       "交通・まちづくり"
     );
   });

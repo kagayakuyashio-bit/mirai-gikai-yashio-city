@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { generateObject } from "ai";
@@ -14,6 +15,7 @@ export async function mergeTopics(
   rawTopics: string[],
   billTitle: string
 ): Promise<string[]> {
+  assertAiEnabled();
   const topicsList = rawTopics.map((t, i) => `${i + 1}. ${t}`).join("\n");
 
   const { object } = await generateObject({

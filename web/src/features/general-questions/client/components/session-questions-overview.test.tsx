@@ -43,7 +43,7 @@ const groups: TopicGroup[] = [
         questionSummary: "予算の方針は？",
         answerSummary: "5分野に注力する。",
         answererRole: "市長",
-        answererName: "高島宗一郎",
+        answererName: "山田太郎",
         topicCount: 2,
         topicIndex: 3,
         questioner: { id: "q2", name: "佐藤太郎", party: null },

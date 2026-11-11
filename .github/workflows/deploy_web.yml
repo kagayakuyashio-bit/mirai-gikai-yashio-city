@@ -1,8 +1,7 @@
 name: Deploy Web
 
+# 公開準備ができるまでは手動実行のみ。公開時に push トリガーを戻す
 on:
-  push:
-    branches: [fukuoka-city/develop]
   workflow_dispatch:
 
 jobs:

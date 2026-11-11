@@ -5,6 +5,7 @@ import {
   type DifficultyLevelEnum,
   VALID_DIFFICULTY_LEVELS,
 } from "./features/bill-difficulty/shared/types";
+import { siteConfig } from "./config/site.config";
 import {
   createUnauthorizedResponse,
   getBasicAuthConfig,
@@ -12,7 +13,21 @@ import {
   validateBasicAuth,
 } from "./lib/basic-auth";
 
+/** AIインタビュー関連の画面。機能が無効の間は存在しないものとして扱う */
+const AI_INTERVIEW_PATH_PATTERNS = [
+  /^\/bills\/[^/]+\/(interview|opinions)(\/|$)/,
+  /^\/preview\/bills\/[^/]+\/interview(\/|$)/,
+  /^\/report(\/|$)/,
+];
+
 export function middleware(request: NextRequest) {
+  if (
+    !siteConfig.features.aiInterview &&
+    AI_INTERVIEW_PATH_PATTERNS.some((p) => p.test(request.nextUrl.pathname))
+  ) {
+    return NextResponse.rewrite(new URL("/not-found", request.url));
+  }
+
   // /dev routes: 本番では404、開発ではauthスキップ
   if (request.nextUrl.pathname.startsWith("/dev")) {
     if (process.env.NODE_ENV !== "development") {

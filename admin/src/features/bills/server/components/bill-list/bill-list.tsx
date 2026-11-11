@@ -2,6 +2,7 @@ import { GitMerge, Plus } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config/site.config";
 import { AutoFeatureButton } from "../../../client/components/bill-list/auto-feature-button";
 import { ResizableBillTable } from "../../../client/components/bill-list/resizable-bill-table";
 import type { BillSortConfig } from "../../../shared/types";
@@ -48,7 +49,7 @@ export async function BillList({
       <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="text-sm text-gray-600">{bills.length}件の議案</div>
         <div className="flex items-center gap-2">
-          {isLocal && selectedSession && (
+          {siteConfig.features.ai && isLocal && selectedSession && (
             <AutoFeatureButton
               councilSessionId={selectedSession.id}
               sessionName={selectedSession.name}

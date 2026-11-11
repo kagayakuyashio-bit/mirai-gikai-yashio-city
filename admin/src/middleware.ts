@@ -1,9 +1,24 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { siteConfig } from "@/config/site.config";
 import { checkAdminPermission } from "@/lib/auth/permissions";
 import { updateSession } from "@/lib/supabase/middleware";
 
+/** 外部AIを使う画面・APIのパス。AI無効時は存在しないものとして扱う */
+const AI_PATH_PATTERNS = [
+  /^\/ai-collection(\/|$)/,
+  /^\/api\/(ai-collection|interview-config|topic-analysis)(\/|$)/,
+  /^\/bills\/[^/]+\/(interview|reports|topic-analysis)(\/|$)/,
+];
+
 export async function middleware(request: NextRequest) {
+  if (
+    !siteConfig.features.ai &&
+    AI_PATH_PATTERNS.some((p) => p.test(request.nextUrl.pathname))
+  ) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
   const { supabaseResponse, user } = await updateSession(request);
 
   // ログインページへのアクセスで、既にログイン済みの場合

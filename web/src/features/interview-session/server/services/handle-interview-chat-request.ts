@@ -1,3 +1,4 @@
+import { assertAiInterviewEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import {
@@ -68,6 +69,7 @@ export async function handleInterviewChatRequest({
   isRetry = false,
   deps,
 }: InterviewChatRequestParams & { deps?: InterviewChatDeps }) {
+  assertAiInterviewEnabled();
   // リクエスト単位のトレースID（同一リクエスト内のLLM呼び出しをまとめる）
   const traceId = crypto.randomUUID();
 

@@ -1,3 +1,4 @@
+import { assertAiEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { generateObject } from "ai";
@@ -32,6 +33,7 @@ export async function generateTopicReports(
   validSessionIds: Set<string>,
   billId: string
 ): Promise<TopicReportOutput[]> {
+  assertAiEnabled();
   const results = await runWithConcurrency(
     topics,
     TOPIC_ANALYSIS_MAX_CONCURRENCY,

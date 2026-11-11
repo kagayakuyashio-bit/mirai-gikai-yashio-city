@@ -1,3 +1,4 @@
+import { assertAiInterviewEnabled } from "@/lib/ai-guard";
 import "server-only";
 
 import { Output, generateText, type LanguageModel } from "ai";
@@ -32,6 +33,7 @@ export async function generateInitialQuestion({
   interviewConfigId,
   deps,
 }: GenerateInitialQuestionParams): Promise<InterviewMessage | null> {
+  assertAiInterviewEnabled();
   try {
     // インタビュー設定と議案情報を取得
     // どちらもサーバーサイドでの生成処理のため、常にAdmin用（非公開制限なし）を使用する

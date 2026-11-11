@@ -4,7 +4,6 @@ import { sanitizeSearchQuery } from "../../shared/utils/sanitize-search-query";
 import type {
   BillSearchResult,
   QuestionSearchResult,
-  BudgetSearchResult,
 } from "../../shared/types/search-types";
 
 export async function searchBills(query: string): Promise<BillSearchResult[]> {
@@ -93,41 +92,6 @@ export async function searchGeneralQuestions(
       topics: topics.map((t) => t.title),
       summary: row.summary,
       session,
-    };
-  });
-}
-
-export async function searchBudgets(
-  query: string
-): Promise<BudgetSearchResult[]> {
-  const supabase = createAdminClient();
-  const safeQuery = sanitizeSearchQuery(query);
-  const { data, error } = await supabase
-    .from("budget_overviews")
-    .select(
-      `
-      id,
-      department_name,
-      department_slug,
-      direction,
-      council_sessions!inner (name, slug)
-    `
-    )
-    .eq("publish_status", "published")
-    .or(`department_name.ilike.%${safeQuery}%,direction.ilike.%${safeQuery}%`)
-    .limit(50);
-
-  if (error) throw new Error(`Failed to search budgets: ${error.message}`);
-
-  return (data ?? []).map((row) => {
-    const session = row.council_sessions as { name: string; slug: string };
-    return {
-      id: row.id,
-      departmentName: row.department_name,
-      direction: row.direction,
-      session: session?.name ?? "",
-      sessionSlug: session?.slug ?? "",
-      departmentSlug: row.department_slug,
     };
   });
 }

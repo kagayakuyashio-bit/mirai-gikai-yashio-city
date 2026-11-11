@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
+import { siteConfig } from "@/config/site.config";
 import { updateReportPublicSetting } from "@/features/interview-report/server/repositories/interview-report-repository";
 import { completeInterviewSession } from "@/features/interview-session/server/services/complete-interview-session";
 import { verifySessionOwnership } from "@/features/interview-session/server/utils/verify-session-ownership";
 
 export async function POST(req: Request) {
+  if (!siteConfig.features.aiInterview) {
+    return new Response(JSON.stringify({ error: "Not found" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   const { sessionId, isPublic } = await req.json();
 
   if (!sessionId) {
