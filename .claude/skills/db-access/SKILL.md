@@ -1,31 +1,36 @@
 ---
 name: db-access
-description: 本番DB・ローカルDB接続の規約。DBデータを参照・更新する際に必ず確認すること。
+description: 八潮市版のDB接続の規約。DBデータを参照・更新する際に必ず確認すること。
 ---
 
-# DB接続規約
+# DB接続規約（八潮市版）
 
-## 重要：ローカルAdminは本番DBに接続済み
+## 重要：操作してよいのはローカルDBだけ
 
-ローカルの Admin アプリは `.env.production` を使って**本番 Supabase DB** に接続している。
+- 開発用DBは、Docker上のローカルSupabase（`127.0.0.1:54432`、API は `http://127.0.0.1:54421`）。
+- **本番や外部のSupabaseプロジェクトには接続しない。** 本番DBはまだ用意していない。
+- 操作の前に、`.env` の `SUPABASE_URL` などが `127.0.0.1` を指していることを確認する。`127.0.0.1` 以外を指していたら、操作せずユーザーに報告する。
+- 本番用の URL・キー・プロジェクト ref は、このリポジトリに書かない。
 
-- 本番 Supabase URL: `https://xklzpkqtyeuqgawnzgrs.supabase.co`
-- 本番プロジェクト ref: `xklzpkqtyeuqgawnzgrs`
-- 認証情報: `.env.production` を参照（`.gitignore` 対象のため非公開）
+## DBを操作する方法
 
-## DBを操作する際のルール
-
-- DB の確認・更新は**本番 URL に対して行う**（ローカルの `127.0.0.1` は使わない）
-- REST API でアクセスする場合は `.env.production` の `SUPABASE_URL` と `SUPABASE_SERVICE_ROLE_KEY` を使用
-- `npx supabase db query` ではなく `curl` + REST API で本番 DB に直接クエリする
-
-## 接続例
+- 確認・更新は、ローカルのDBコンテナに対して `psql` で行う。
 
 ```bash
-# council_sessions 一覧取得
-curl -s "$SUPABASE_URL/rest/v1/council_sessions?select=*" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
-  -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+# Git Bash で docker が見つからないときは PATH を追加する
+export PATH="$PATH:/c/Program Files/Docker/Docker/resources/bin"
+
+# 参照
+docker exec supabase_db_mirai-gikai psql -U postgres -c "select bill_number, name from bills"
+
+# SQLファイルを流す（トランザクションと ON_ERROR_STOP を付ける）
+docker exec -i supabase_db_mirai-gikai psql -U postgres -v ON_ERROR_STOP=1 < bills.sql
 ```
 
-環境変数は `.env.production` から読み込むか、直接値を参照すること。
+- 事前に `npx supabase start`（Docker Desktop が起動していること）。
+- 初期状態に戻すときは `pnpm db:reset`（ローカルDBの中身がすべて消える。実行前に、消してよいデータだけであることを確認する）。
+
+## 関連
+
+- 議案の取り込み手順: `yashio-import-bill` スキル
+- 起動手順: README の「次回の起動方法」

@@ -75,7 +75,12 @@ export async function BillDetailHeader({
 
       <div className="px-4 pb-8">
         {displaySummary && (
-          <p className="mb-4 leading-relaxed">{displaySummary}</p>
+          <div className="mb-4">
+            <p className="text-xs font-medium text-muted-foreground mb-1">
+              要約（資料の記載に基づく運営者の要約）
+            </p>
+            <p className="leading-relaxed">{displaySummary}</p>
+          </div>
         )}
 
         {bill.source_url && (
