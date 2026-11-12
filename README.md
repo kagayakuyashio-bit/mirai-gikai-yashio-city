@@ -18,6 +18,55 @@
 
 - [fork手順](docs/kawasaki/20260304_1000_別地域向けfork手順.md)
 
+## 次回の起動方法（データベースあり・推奨）
+
+セットアップ済みのパソコンで、2回目以降に起動する手順です。
+
+1. **Docker Desktop を起動**し、左下が「Engine running」になるまで待ちます。
+2. ターミナルで次を実行します。
+
+```bash
+cd C:\tempMirai\mirai-gikai-yashio-city
+
+# Supabase（データベース）を起動。2回目以降は db:reset は不要
+npx supabase start
+
+# web と admin を起動
+pnpm dev
+```
+
+- web: **http://localhost:3002** / admin: http://localhost:3001
+- Supabase Studio（DB管理画面）: http://127.0.0.1:54423
+- 止めるとき: `Ctrl+C` のあと、`npx supabase stop`
+- DBを初期状態に戻したいとき（ローカルDBの中身が消えます）: `pnpm db:reset`
+- Git Bash で `docker` が見つからないときは、PATH に `C:\Program Files\Docker\Docker\resources\bin` を追加します。
+
+## 次回の起動方法（議案なしの画面だけ確認する・Docker不要）
+
+データベースなしで画面の枠だけ確認する手順です。
+
+```bash
+# 1. プロジェクトのフォルダに移動
+cd C:\tempMirai\mirai-gikai-yashio-city
+
+# 2. （初回のみ）環境変数ファイルを作る。作成済みなら不要
+cp .env.example .env
+
+# 3. （初回・依存関係が変わったときのみ）パッケージをインストール
+pnpm install
+
+# 4. webだけを起動
+cd web
+npx dotenv -e ../.env -- next dev --turbopack --port 3002
+```
+
+起動したら、ブラウザで **http://localhost:3002** を開きます。止めるときは、起動したターミナルで `Ctrl+C` を押します。
+
+- ポート番号は `web` が **3002**、`admin`（管理画面）が **3001** です（`pnpm dev` で両方を同時に起動できます）。
+- データベース（Supabase）を起動していない間は、ターミナルに「fetch failed」のエラーが出ます。画面は議案0件の状態で表示されるので、無視して構いません。
+- Googleフォントを取得できない環境では、標準フォントで表示されます。
+- 議案・定例会の表示や、管理画面へのログインにはデータベースが必要です。次のセットアップ手順で用意します。
+
 ## ローカル環境のセットアップ
 
 **前提条件**: Node.js 20+ / pnpm / Docker
@@ -34,7 +83,7 @@ npx supabase start
 pnpm db:reset
 
 # 開発サーバー起動
-pnpm dev   # web(:3000) + admin(:3001)
+pnpm dev   # web(:3002) + admin(:3001)
 ```
 
 開発用 Admin アカウント: `admin@example.com` / `admin123456`（開発用DB専用。本番では使わない）
