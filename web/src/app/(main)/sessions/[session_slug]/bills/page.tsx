@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layouts/container";
+import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import { SessionBillsPage } from "@/features/bills/server/components/session-bills-page";
 import { getSessionBills } from "@/features/bills/server/loaders/get-session-bills";
@@ -46,6 +47,9 @@ export default async function SessionBillsRoute({
 
   return (
     <Container className="py-10">
+      <div className="mb-6">
+        <GeneralQuestionsBanner sessionSlug={session_slug} />
+      </div>
       <SessionBillsPage session={session} bills={bills} />
     </Container>
   );

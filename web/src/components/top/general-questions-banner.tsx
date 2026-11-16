@@ -18,7 +18,7 @@ export function GeneralQuestionsBanner({
         <div>
           <p className="font-bold text-mirai-text">一般質問</p>
           <p className="mt-0.5 text-sm text-mirai-text-secondary">
-            議員が市長・局長に直接質問した内容をわかりやすく解説します
+            どの議員がどんなテーマを質問したかを一覧で見られます
           </p>
         </div>
       </div>
