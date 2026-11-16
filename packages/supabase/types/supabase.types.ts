@@ -603,6 +603,53 @@ export type Database = {
         }
         Relationships: []
       }
+      council_members: {
+        Row: {
+          created_at: string
+          faction_id: string | null
+          id: string
+          name: string
+          seat_number: number
+          source_url: string | null
+          term_end: string | null
+          term_start: string | null
+          terms_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          faction_id?: string | null
+          id?: string
+          name: string
+          seat_number: number
+          source_url?: string | null
+          term_end?: string | null
+          term_start?: string | null
+          terms_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          faction_id?: string | null
+          id?: string
+          name?: string
+          seat_number?: number
+          source_url?: string | null
+          term_end?: string | null
+          term_start?: string | null
+          terms_count?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "council_members_faction_id_fkey"
+            columns: ["faction_id"]
+            isOneToOne: false
+            referencedRelation: "factions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       council_sessions: {
         Row: {
           council_url: string | null

@@ -17,6 +17,10 @@ export const primaryLinks: FooterLink[] = [
     label: "TOP",
     href: "/",
   },
+  {
+    label: "議員名簿",
+    href: "/members",
+  },
   ...(siteConfig.externalLinks.aboutNote
     ? [
         {
