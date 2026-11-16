@@ -1,5 +1,6 @@
 import { Container } from "@/components/layouts/container";
 import { About } from "@/components/top/about";
+import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { Hero } from "@/components/top/hero";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
 import { TeamMirai } from "@/components/top/team-mirai";
@@ -25,6 +26,10 @@ export default async function Home() {
     getAllPastSessions(),
   ]);
 
+  // 一般質問ページは最新の定例会のものを案内する
+  const latestSessionSlug =
+    currentSession?.slug ?? pastSessions.find((s) => s.slug)?.slug ?? null;
+
   const toBillChatContext = (bill: BillWithContent) => {
     return {
       name: `${bill.bill_content?.title}（${bill.name}）`,
@@ -45,6 +50,13 @@ export default async function Home() {
       <Container className="">
         <div className="py-10">
           <main className="flex flex-col gap-16">
+            {/* 一般質問への入口 */}
+            <div className="flex flex-col gap-3">
+              {latestSessionSlug && (
+                <GeneralQuestionsBanner sessionSlug={latestSessionSlug} />
+              )}
+            </div>
+
             {/* 注目の議案セクション */}
             <FeaturedBillSection bills={featuredBills} />
 
