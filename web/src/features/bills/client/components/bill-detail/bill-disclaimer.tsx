@@ -8,8 +8,8 @@ export function BillDisclaimer() {
       <div className="space-y-3">
         <h3 className="text-sm font-bold text-black">掲載コンテンツについて</h3>
         <p className="text-xs leading-relaxed text-mirai-text-note">
-          掲載されている議案情報は、{siteConfig.councilName}
-          の公式サイトで公開されている議案などの情報を基に、運営者が整理したものです。「要約」は運営者が資料の記載に基づいて書いたもので、「原文」は公式資料の文言をそのまま掲載しています。資料に書かれていない内容や、確認できていない賛否は掲載していません。
+          掲載されている議案等の情報は、{siteConfig.councilName}
+          に上程された議案などの公開情報を基に、AIを活用しながら背景情報を整理したものです。
         </p>
       </div>
 

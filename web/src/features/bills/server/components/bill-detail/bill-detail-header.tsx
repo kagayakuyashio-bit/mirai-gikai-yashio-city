@@ -2,8 +2,8 @@ import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { formatDateJST } from "@/lib/utils/date";
 import { getInterviewLPLink } from "@/features/interview-config/shared/utils/interview-links";
+import { formatDateJST } from "@/lib/utils/date";
 import { BillDetailShareButton } from "../../../client/components/bill-detail/bill-detail-share-button";
 import { BillStatusBadge } from "../../../client/components/bill-list/bill-status-badge";
 import { BillTag } from "../../../client/components/bill-list/bill-tag";
@@ -77,7 +77,7 @@ export async function BillDetailHeader({
         {displaySummary && (
           <div className="mb-4">
             <p className="text-xs font-medium text-muted-foreground mb-1">
-              要約（資料の記載に基づく運営者の要約）
+              要約（公開情報を基に、AIを活用して整理）
             </p>
             <p className="leading-relaxed">{displaySummary}</p>
           </div>
