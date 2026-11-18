@@ -104,9 +104,7 @@ export default function PrivacyPage() {
             個人情報の確認・修正・削除・利用停止等をご希望される場合は、下記のお問い合わせ窓口までご連絡ください。なお、ご請求内容がご本人によるものであることが確認できた場合に限り、必要な調査を行い、その結果に基づき適切な対応を行います。
           </LegalParagraph>
           <LegalParagraph>お問い合わせ窓口</LegalParagraph>
-          <LegalParagraph>
-            {siteConfig.operator.name} 個人情報保護管理責任者
-          </LegalParagraph>
+          <LegalParagraph>運営者 {siteConfig.operator.name}</LegalParagraph>
           <LegalParagraph>
             <a
               href={siteConfig.operator.contactUrl}
@@ -114,7 +112,7 @@ export default function PrivacyPage() {
               rel="noreferrer"
               className="underline underline-offset-2"
             >
-              {siteConfig.operator.contactUrl}
+              {siteConfig.operator.contactUrl.replace("mailto:", "")}
             </a>
           </LegalParagraph>
         </section>

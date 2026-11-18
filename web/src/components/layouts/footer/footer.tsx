@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "@/config/site.config";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site.config";
 import { isInterviewPage } from "@/lib/page-layout-utils";
 import { policyLinks, primaryLinks } from "./footer.config";
 
@@ -21,6 +21,7 @@ export function Footer() {
         <FooterPrimaryLinks />
         <FooterPolicies />
         <FooterDisclaimer />
+        <FooterOperator />
         {siteConfig.features.showTeamMiraiSection && <FooterCopyright />}
       </div>
     </footer>
@@ -96,6 +97,15 @@ function FooterDisclaimer() {
     <p className="text-[11px] text-slate-500 text-center mt-1 mb-3">
       このサービスは政党チームみらいが運営しているものではありません
     </p>
+  );
+}
+
+function FooterOperator() {
+  return (
+    <div className="text-[11px] text-slate-500 text-center mb-3">
+      <p>八潮市、八潮市議会の公式サイトではありません。</p>
+      <p className="mt-1">© 2026 みらい議会＠八潮市（運営: 荒川たかひろ）</p>
+    </div>
   );
 }
 

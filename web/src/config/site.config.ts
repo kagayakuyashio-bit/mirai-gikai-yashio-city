@@ -41,8 +41,8 @@ export const siteConfig = {
    * 利用規約や問い合わせ先に使用します。
    */
   operator: {
-    name: "【仮】八潮市（運営者情報は公開前に差し替え）" as string,
-    contactUrl: "" as string,
+    name: "荒川たかひろ" as string,
+    contactUrl: "mailto:kagayakuyashio@gmail.com" as string,
     /** 利用規約の準拠法・管轄裁判所（第一審の専属的合意管轄） */
     jurisdiction: "【仮】さいたま地方裁判所（公開前に要確認）" as string,
   },

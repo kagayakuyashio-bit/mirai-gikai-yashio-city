@@ -6,14 +6,16 @@ export function Hero() {
   return (
     <div className="relative w-full h-[80vh] min-h-[400px] md:h-[70vh]">
       <Image
-        src="/img/hero_background.png"
+        src="/img/hero_background_yashio.webp"
         alt={siteConfig.councilName}
         fill
         priority
-        className="object-cover"
+        className="object-cover object-[40%_center]"
         sizes="100vw"
         quality={85}
       />
+      {/* 文字を読みやすくするための白いもや */}
+      <div className="absolute inset-0 bg-gradient-to-t from-white/85 via-white/55 to-white/10" />
       <div className="absolute bottom-[30vh] left-0 right-0 py-4">
         <Container>
           <p className="font-bold text-xl md:text-2xl leading-relaxed">

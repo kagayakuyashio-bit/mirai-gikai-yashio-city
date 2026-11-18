@@ -76,6 +76,20 @@ export default async function Home() {
       </div>
 
       <Container>
+        {/* 公式サイトへの案内 */}
+        <p className="pt-10 text-sm leading-relaxed">
+          市議会に提出されているすべての議案等は、
+          <a
+            href="https://www.city.yashio.lg.jp/gikai/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold underline underline-offset-2"
+          >
+            市議会のホームページ
+          </a>
+          へ
+        </p>
+
         {/* みらい議会とは セクション */}
         <About />
 
