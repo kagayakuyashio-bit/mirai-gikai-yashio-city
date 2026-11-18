@@ -71,23 +71,23 @@ export default async function Home() {
         <Container>
           <div className="flex flex-col gap-8">
             <PastSessionsSection sessions={pastSessions} />
+
+            {/* 公式サイトへの案内 */}
+            <p className="text-sm leading-relaxed">
+              <a
+                href="https://www.city.yashio.lg.jp/gikai/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold underline underline-offset-2"
+              >
+                市議会に提出されたすべての議案等は、市議会のホームページへ
+              </a>
+            </p>
           </div>
         </Container>
       </div>
 
       <Container>
-        {/* 公式サイトへの案内 */}
-        <p className="pt-10 text-sm leading-relaxed">
-          <a
-            href="https://www.city.yashio.lg.jp/gikai/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold underline underline-offset-2"
-          >
-            市議会に提出されたすべての議案等は、市議会のホームページへ
-          </a>
-        </p>
-
         {/* みらい議会とは セクション */}
         <About />
 
