@@ -39,6 +39,13 @@ export default async function SessionQuestionsRoute({
 
   const questions = await getGeneralQuestionsBySession(session.id);
   const sourceUrl = questions.find((q) => q.source_url)?.source_url ?? null;
+  // 質問と答弁の要旨が登録されている会期かどうか
+  const hasDetail = (q: (typeof questions)[number]) =>
+    q.topics.some((t) => t.question_summary);
+  const anyDetail = questions.some(hasDetail);
+  const sourceLabel = sourceUrl?.includes("kaigiroku")
+    ? "八潮市議会 会議録検索システム（公式の会議録）"
+    : "八潮市議会 一般質問通告者及び通告書一覧表（公式PDF）";
 
   // 質問の日（1日目、2日目…）ごとにまとめる
   const days = [...new Set(questions.map((q) => q.session_day))].sort(
@@ -50,7 +57,9 @@ export default async function SessionQuestionsRoute({
       <h1 className="text-2xl font-bold mb-2">{session.name} 一般質問</h1>
       <p className="text-sm leading-relaxed text-mirai-text-secondary mb-6">
         一般質問は、議員が市の仕事や考えをたずねる場です。ここでは、どの議員がどんなテーマを取り上げたかを一覧にしています。
-        質問や答えの中身は、議事録が公開されてから追加する予定です。
+        {anyDetail
+          ? "各議員のカードから、質問と市の答弁の要旨を読めます。要旨は、議事録をもとにAIを活用して整理したものです。正確な内容は、公式の会議録をご確認ください。"
+          : "質問や答えの中身は、議事録が公開されてから追加する予定です。"}
       </p>
 
       {questions.length === 0 ? (
@@ -82,6 +91,14 @@ export default async function SessionQuestionsRoute({
                         <li key={t.title}>{t.title}</li>
                       ))}
                     </ul>
+                    {hasDetail(q) && (
+                      <Link
+                        href={`/questions/${q.id}`}
+                        className="mt-3 inline-block text-sm font-bold underline underline-offset-2"
+                      >
+                        質問と答弁の要旨を見る
+                      </Link>
+                    )}
                   </li>
                 ))}
             </ul>
@@ -98,7 +115,7 @@ export default async function SessionQuestionsRoute({
             rel="noopener noreferrer"
             className="underline"
           >
-            八潮市議会 一般質問通告者及び通告書一覧表（公式PDF）
+            {sourceLabel}
           </a>
         ) : (
           "八潮市議会（公式サイト）"
