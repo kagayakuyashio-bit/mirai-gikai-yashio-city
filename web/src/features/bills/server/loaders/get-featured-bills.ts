@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
-import { getActiveCouncilSession } from "@/features/council-sessions/server/loaders/get-active-council-session";
+import { getHomeDisplaySession } from "@/features/council-sessions/server/loaders/get-home-display-session";
 import { CACHE_TAGS } from "@/lib/cache-tags";
 import type { BillWithContent } from "../../shared/types";
 import {
@@ -12,14 +12,14 @@ import {
 /**
  * 注目の議案を取得する
  * is_featured = true でアクティブな定例会の公開済み議案を最新順に取得
- * アクティブな定例会がない場合は全件取得
+ * アクティブな定例会がない場合は、直近の定例会の議案を取得
  */
 export async function getFeaturedBills(): Promise<BillWithContent[]> {
   // キャッシュ外でcookiesにアクセス
   const difficultyLevel = await getDifficultyLevel();
-  const activeSession = await getActiveCouncilSession();
+  const displaySession = await getHomeDisplaySession();
 
-  return _getCachedFeaturedBills(difficultyLevel, activeSession?.id ?? null);
+  return _getCachedFeaturedBills(difficultyLevel, displaySession?.id ?? null);
 }
 
 const _getCachedFeaturedBills = unstable_cache(

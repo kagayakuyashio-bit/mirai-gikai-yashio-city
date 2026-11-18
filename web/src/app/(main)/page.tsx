@@ -16,6 +16,7 @@ import { HomeChatClient } from "@/features/chat/client/components/home-chat-clie
 import { CurrentCouncilSession } from "@/features/council-sessions/client/components/current-council-session";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
 import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
+import { getHomeDisplaySession } from "@/features/council-sessions/server/loaders/get-home-display-session";
 import {
   formatSessionLabel,
   formatSessionMonthLabel,
@@ -41,14 +42,11 @@ export default async function Home() {
   const sessionLabels = Object.fromEntries(
     sessionCandidates.map((s) => [s.id, formatSessionLabel(s)])
   );
-  // 注目の議案が、どの議会のものか（新しい順・重複なし）
-  const shownSessionNames = [
-    ...new Set(
-      sessionCandidates
-        .filter((s) => featuredBills.some((b) => b.council_session_id === s.id))
-        .map((s) => formatSessionMonthLabel(s))
-    ),
-  ];
+  // 「注目の議案」「分野別の議案」に表示している定例会（開会中、なければ直近）
+  const displaySession = await getHomeDisplaySession();
+  const displaySessionName = displaySession
+    ? formatSessionMonthLabel(displaySession)
+    : null;
   const sessionsWithQuestions = (
     await Promise.all(
       sessionCandidates.map(async (s) =>
@@ -83,11 +81,20 @@ export default async function Home() {
               <BudgetOverviewBox />
             </div>
 
+            {/* 表示している議会（注目の議案・分野別の議案に共通） */}
+            {displaySessionName &&
+              (featuredBills.length > 0 || billsByTag.length > 0) && (
+                <p className="-mb-8">
+                  <span className="inline-block rounded-full bg-mirai-highlight px-3 py-1 text-sm font-bold text-mirai-text">
+                    {displaySessionName}を表示中
+                  </span>
+                </p>
+              )}
+
             {/* 注目の議案セクション */}
             <FeaturedBillSection
               bills={featuredBills}
               sessionLabels={sessionLabels}
-              shownSessionNames={shownSessionNames}
             />
 
             {/* タグ別議案一覧セクション */}
