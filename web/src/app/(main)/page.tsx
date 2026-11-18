@@ -1,5 +1,6 @@
 import { Container } from "@/components/layouts/container";
 import { About } from "@/components/top/about";
+import { BudgetOverviewBox } from "@/components/top/budget-overview-box";
 import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { Hero } from "@/components/top/hero";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
@@ -68,6 +69,7 @@ export default async function Home() {
             {/* 一般質問への入口 */}
             <div className="flex flex-col gap-3">
               <GeneralQuestionsBanner sessions={sessionsWithQuestions} />
+              <BudgetOverviewBox />
             </div>
 
             {/* 注目の議案セクション */}
