@@ -16,7 +16,10 @@ import { HomeChatClient } from "@/features/chat/client/components/home-chat-clie
 import { CurrentCouncilSession } from "@/features/council-sessions/client/components/current-council-session";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
 import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
-import { formatSessionLabel } from "@/features/council-sessions/shared/utils/format-session-label";
+import {
+  formatSessionLabel,
+  formatSessionMonthLabel,
+} from "@/features/council-sessions/shared/utils/format-session-label";
 import { getGeneralQuestionsBySession } from "@/features/general-questions/server/loaders/get-general-questions-by-session";
 import { getJapanTime } from "@/lib/utils/date";
 
@@ -38,6 +41,14 @@ export default async function Home() {
   const sessionLabels = Object.fromEntries(
     sessionCandidates.map((s) => [s.id, formatSessionLabel(s)])
   );
+  // 注目の議案が、どの議会のものか（新しい順・重複なし）
+  const shownSessionNames = [
+    ...new Set(
+      sessionCandidates
+        .filter((s) => featuredBills.some((b) => b.council_session_id === s.id))
+        .map((s) => formatSessionMonthLabel(s))
+    ),
+  ];
   const sessionsWithQuestions = (
     await Promise.all(
       sessionCandidates.map(async (s) =>
@@ -76,6 +87,7 @@ export default async function Home() {
             <FeaturedBillSection
               bills={featuredBills}
               sessionLabels={sessionLabels}
+              shownSessionNames={shownSessionNames}
             />
 
             {/* タグ別議案一覧セクション */}

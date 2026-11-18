@@ -24,3 +24,16 @@ export function formatQuestionDay(
   const date = sessionSlug ? QUESTION_DAY_DATES[sessionSlug]?.[day] : undefined;
   return date ? `${day}日目　${date}` : `${day}日目`;
 }
+
+/**
+ * 「令和8年9月定例会」のように、年月つきの短い会期名を返す。
+ * 開始日の年月を使う（例: 2026-09-01 開始の定例会 → 令和8年9月定例会）。
+ */
+export function formatSessionMonthLabel(session: {
+  name: string;
+  start_date: string;
+}): string {
+  const [y, m] = session.start_date.split("-").map(Number);
+  const kind = session.name.includes("臨時会") ? "臨時会" : "定例会";
+  return `令和${y - 2018}年${m}月${kind}`;
+}
