@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ChevronDown, ExternalLink, Wallet } from "lucide-react";
 import Link from "next/link";
 
 const TAX_MAP_URL =
@@ -7,19 +7,25 @@ const TAX_MAP_URL =
 const itemClass =
   "flex items-center justify-between gap-4 py-3 text-mirai-text hover:text-primary transition-colors";
 
-/** 「八潮市の予算・評価・お金の使い道」への入口 */
+/** クリックすると3つのリンクが開く「八潮市の予算・評価・お金の使い道」の案内 */
 export function BudgetOverviewBox() {
   return (
-    <div className="bg-card border border-border rounded-lg px-5 py-4">
-      <div>
-        <p className="font-bold text-mirai-text">
-          八潮市の予算・評価・お金の使い道
-        </p>
-        <p className="mt-0.5 text-sm text-mirai-text-secondary">
-          重点施策、事務事業評価、お金の使い道をまとめて見る
-        </p>
-      </div>
-      <ul className="mt-3 flex flex-col divide-y divide-border border-t border-border">
+    <details className="group bg-card border border-border rounded-lg">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 hover:bg-muted/40 rounded-lg [&::-webkit-details-marker]:hidden">
+        <div className="flex items-start gap-3">
+          <Wallet className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+          <div>
+            <p className="font-bold text-mirai-text">
+              八潮市の予算・評価・お金の使い道
+            </p>
+            <p className="mt-0.5 text-sm text-mirai-text-secondary">
+              重点施策、事務事業評価、お金の使い道をまとめて見る
+            </p>
+          </div>
+        </div>
+        <ChevronDown className="w-5 h-5 text-mirai-text-muted shrink-0 transition-transform group-open:rotate-180" />
+      </summary>
+      <ul className="mx-5 mb-2 flex flex-col divide-y divide-border border-t border-border">
         <li>
           <Link href="/budget/r8" className={itemClass}>
             <span>
@@ -63,6 +69,6 @@ export function BudgetOverviewBox() {
           </a>
         </li>
       </ul>
-    </div>
+    </details>
   );
 }

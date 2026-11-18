@@ -1,4 +1,4 @@
-import { ArrowRight, MessageSquare } from "lucide-react";
+import { ArrowRight, ChevronDown, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { formatSessionLabel } from "@/features/council-sessions/shared/utils/format-session-label";
 
@@ -13,6 +13,7 @@ type GeneralQuestionsBannerProps = {
   sessions: BannerSession[];
 };
 
+/** クリックすると、定例会ごとのリンクが開く「一般質問」の案内 */
 export function GeneralQuestionsBanner({
   sessions,
 }: GeneralQuestionsBannerProps) {
@@ -22,17 +23,20 @@ export function GeneralQuestionsBanner({
   if (links.length === 0) return null;
 
   return (
-    <div className="bg-card border border-border rounded-lg px-5 py-4">
-      <div className="flex items-start gap-3">
-        <MessageSquare className="w-6 h-6 text-primary shrink-0 mt-0.5" />
-        <div>
-          <p className="font-bold text-mirai-text">一般質問</p>
-          <p className="mt-0.5 text-sm text-mirai-text-secondary">
-            どの議員がどんなテーマを質問したかを一覧で見られます
-          </p>
+    <details className="group bg-card border border-border rounded-lg">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 hover:bg-muted/40 rounded-lg [&::-webkit-details-marker]:hidden">
+        <div className="flex items-start gap-3">
+          <MessageSquare className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+          <div>
+            <p className="font-bold text-mirai-text">一般質問</p>
+            <p className="mt-0.5 text-sm text-mirai-text-secondary">
+              どの議員がどんなテーマを質問したかを一覧で見られます
+            </p>
+          </div>
         </div>
-      </div>
-      <ul className="mt-3 flex flex-col divide-y divide-border border-t border-border">
+        <ChevronDown className="w-5 h-5 text-mirai-text-muted shrink-0 transition-transform group-open:rotate-180" />
+      </summary>
+      <ul className="mx-5 mb-2 flex flex-col divide-y divide-border border-t border-border">
         {links.map((session) => (
           <li key={session.slug}>
             <Link
@@ -45,6 +49,6 @@ export function GeneralQuestionsBanner({
           </li>
         ))}
       </ul>
-    </div>
+    </details>
   );
 }
