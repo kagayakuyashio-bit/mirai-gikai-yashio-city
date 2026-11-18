@@ -95,7 +95,7 @@ function FooterPolicies() {
 function FooterDisclaimer() {
   return (
     <p className="text-[11px] text-slate-500 text-center mt-1 mb-3">
-      このサービスは政党チームみらいが運営しているものではありません
+      このサービスは政党チームみらいが運営しているものではありません。
     </p>
   );
 }
@@ -104,6 +104,9 @@ function FooterOperator() {
   return (
     <div className="text-[11px] text-slate-500 text-center mb-3">
       <p>八潮市、八潮市議会の公式サイトではありません。</p>
+      <p className="mt-1">
+        公式サイトで公開されている資料をもとにまとめたものです。正確な内容は、必ず公式サイトでご確認ください。
+      </p>
       <p className="mt-1">© 2026 みらい議会＠八潮市（運営: 荒川たかひろ）</p>
     </div>
   );
