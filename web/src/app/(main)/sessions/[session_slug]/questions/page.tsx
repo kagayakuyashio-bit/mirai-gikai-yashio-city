@@ -3,6 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layouts/container";
 import { getCouncilSessionBySlug } from "@/features/council-sessions/server/loaders/get-council-session-by-slug";
+import {
+  formatQuestionDay,
+  formatSessionLabel,
+} from "@/features/council-sessions/shared/utils/format-session-label";
 import { getGeneralQuestionsBySession } from "@/features/general-questions/server/loaders/get-general-questions-by-session";
 
 interface SessionQuestionsRouteProps {
@@ -22,8 +26,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${session.name} 一般質問`,
-    description: `${session.name}の一般質問で、どの議員がどんなテーマを取り上げたかの一覧です。`,
+    title: `${formatSessionLabel(session)} 一般質問`,
+    description: `${formatSessionLabel(session)}の一般質問で、どの議員がどんなテーマを取り上げたかの一覧です。`,
   };
 }
 
@@ -54,7 +58,9 @@ export default async function SessionQuestionsRoute({
 
   return (
     <Container className="py-10">
-      <h1 className="text-2xl font-bold mb-2">{session.name} 一般質問</h1>
+      <h1 className="text-2xl font-bold mb-2">
+        {formatSessionLabel(session)} 一般質問
+      </h1>
       <p className="text-sm leading-relaxed text-mirai-text-secondary mb-6">
         一般質問は、議員が市の仕事や考えをたずねる場です。ここでは、どの議員がどんなテーマを取り上げたかを一覧にしています。
         {anyDetail
@@ -69,7 +75,9 @@ export default async function SessionQuestionsRoute({
       ) : (
         days.map((day) => (
           <section key={day} className="mb-8">
-            <h2 className="text-lg font-bold mb-3">{day}日目</h2>
+            <h2 className="text-lg font-bold mb-3">
+              {formatQuestionDay(session.slug, day)}
+            </h2>
             <ul className="flex flex-col gap-3">
               {questions
                 .filter((q) => q.session_day === day)

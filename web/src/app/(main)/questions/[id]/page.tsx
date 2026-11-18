@@ -4,11 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layouts/container";
 import { siteConfig } from "@/config/site.config";
-import { RawTranscriptView } from "@/features/general-questions/server/components/raw-transcript-view";
+import { getCouncilSessionById } from "@/features/council-sessions/server/loaders/get-council-session-by-id";
+import {
+  formatQuestionDay,
+  formatSessionLabel,
+} from "@/features/council-sessions/shared/utils/format-session-label";
 import { QuestionChatView } from "@/features/general-questions/client/components/question-chat-view";
 import { QuestionViewToggle } from "@/features/general-questions/client/components/question-view-toggle";
+import { RawTranscriptView } from "@/features/general-questions/server/components/raw-transcript-view";
 import { getGeneralQuestionById } from "@/features/general-questions/server/loaders/get-general-question-by-id";
-import { getCouncilSessionById } from "@/features/council-sessions/server/loaders/get-council-session-by-id";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -22,20 +26,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "質問が見つかりません" };
   }
 
+  const session = await getCouncilSessionById(question.council_session_id);
+  const sessionLabel = session ? `${formatSessionLabel(session)} ` : "";
+
   return {
-    title: `${question.questioner_name} 議員の一般質問 | ${siteConfig.siteName}`,
+    title: `${sessionLabel}${question.questioner_name} 議員の一般質問 | ${siteConfig.siteName}`,
     description: question.summary ?? undefined,
   };
 }
-
-const DAY_LABELS: Record<number, string> = {
-  1: "第1日",
-  2: "第2日",
-  3: "第3日",
-  4: "第4日",
-  5: "第5日",
-  6: "第6日",
-};
 
 export default async function GeneralQuestionDetailPage({ params }: Props) {
   const { id } = await params;
@@ -52,8 +50,7 @@ export default async function GeneralQuestionDetailPage({ params }: Props) {
     ? `/sessions/${session.slug}/questions`
     : "/questions";
 
-  const dayLabel =
-    DAY_LABELS[question.session_day] ?? `第${question.session_day}日`;
+  const dayLabel = formatQuestionDay(session?.slug, question.session_day);
 
   return (
     <Container className="py-8 max-w-2xl">
@@ -70,6 +67,11 @@ export default async function GeneralQuestionDetailPage({ params }: Props) {
         <h1 className="text-2xl font-bold text-mirai-text">
           {question.questioner_name} 議員
         </h1>
+        {session && (
+          <p className="mt-1 text-sm font-bold text-primary-accent">
+            {formatSessionLabel(session)}
+          </p>
+        )}
         <p className="mt-1 text-sm text-mirai-text-secondary">
           {question.questioner_party && (
             <span>{question.questioner_party}　｜　</span>
