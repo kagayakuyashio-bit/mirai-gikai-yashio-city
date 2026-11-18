@@ -15,6 +15,8 @@ import { HomeChatClient } from "@/features/chat/client/components/home-chat-clie
 import { CurrentCouncilSession } from "@/features/council-sessions/client/components/current-council-session";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
 import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
+import { formatSessionLabel } from "@/features/council-sessions/shared/utils/format-session-label";
+import { getGeneralQuestionsBySession } from "@/features/general-questions/server/loaders/get-general-questions-by-session";
 import { getJapanTime } from "@/lib/utils/date";
 
 export default async function Home() {
@@ -26,9 +28,22 @@ export default async function Home() {
     getAllPastSessions(),
   ]);
 
-  // 一般質問ページは最新の定例会のものを案内する
-  const latestSessionSlug =
-    currentSession?.slug ?? pastSessions.find((s) => s.slug)?.slug ?? null;
+  // 一般質問が登録されている定例会（新しい順）を集める
+  const sessionCandidates = [
+    ...(currentSession ? [currentSession] : []),
+    ...pastSessions.filter((s) => s.id !== currentSession?.id),
+  ].sort((a, b) => b.start_date.localeCompare(a.start_date));
+  // 議案カードに出す「2026年 令和8年第3回定例会」などの表記
+  const sessionLabels = Object.fromEntries(
+    sessionCandidates.map((s) => [s.id, formatSessionLabel(s)])
+  );
+  const sessionsWithQuestions = (
+    await Promise.all(
+      sessionCandidates.map(async (s) =>
+        (await getGeneralQuestionsBySession(s.id)).length > 0 ? s : null
+      )
+    )
+  ).filter((s) => s !== null);
 
   const toBillChatContext = (bill: BillWithContent) => {
     return {
@@ -52,16 +67,20 @@ export default async function Home() {
           <main className="flex flex-col gap-16">
             {/* 一般質問への入口 */}
             <div className="flex flex-col gap-3">
-              {latestSessionSlug && (
-                <GeneralQuestionsBanner sessionSlug={latestSessionSlug} />
-              )}
+              <GeneralQuestionsBanner sessions={sessionsWithQuestions} />
             </div>
 
             {/* 注目の議案セクション */}
-            <FeaturedBillSection bills={featuredBills} />
+            <FeaturedBillSection
+              bills={featuredBills}
+              sessionLabels={sessionLabels}
+            />
 
             {/* タグ別議案一覧セクション */}
-            <BillsByTagSection billsByTag={billsByTag} />
+            <BillsByTagSection
+              billsByTag={billsByTag}
+              sessionLabels={sessionLabels}
+            />
           </main>
         </div>
       </Container>

@@ -1,12 +1,17 @@
 import Link from "next/link";
-import type { BillWithContent } from "../../shared/types";
 import { BillCard } from "../../client/components/bill-list/bill-card";
+import type { BillWithContent } from "../../shared/types";
 
 interface FeaturedBillSectionProps {
   bills: BillWithContent[];
+  /** 定例会ID → 「2026年 令和8年第3回定例会」などの表記 */
+  sessionLabels?: Record<string, string>;
 }
 
-export function FeaturedBillSection({ bills }: FeaturedBillSectionProps) {
+export function FeaturedBillSection({
+  bills,
+  sessionLabels = {},
+}: FeaturedBillSectionProps) {
   if (bills.length === 0) {
     return null;
   }
@@ -27,7 +32,14 @@ export function FeaturedBillSection({ bills }: FeaturedBillSectionProps) {
       <div className="flex flex-col gap-4">
         {bills.map((bill) => (
           <Link key={bill.id} href={`/bills/${bill.id}`}>
-            <BillCard bill={bill} />
+            <BillCard
+              bill={bill}
+              sessionLabel={
+                bill.council_session_id
+                  ? sessionLabels[bill.council_session_id]
+                  : undefined
+              }
+            />
           </Link>
         ))}
       </div>

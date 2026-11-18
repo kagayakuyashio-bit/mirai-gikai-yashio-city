@@ -1,18 +1,28 @@
 import { ArrowRight, MessageSquare } from "lucide-react";
 import Link from "next/link";
+import { formatSessionLabel } from "@/features/council-sessions/shared/utils/format-session-label";
+
+type BannerSession = {
+  slug: string | null;
+  name: string;
+  start_date: string;
+};
 
 type GeneralQuestionsBannerProps = {
-  sessionSlug: string;
+  /** 一般質問が登録されている定例会（新しい順） */
+  sessions: BannerSession[];
 };
 
 export function GeneralQuestionsBanner({
-  sessionSlug,
+  sessions,
 }: GeneralQuestionsBannerProps) {
+  const links = sessions.filter(
+    (s): s is BannerSession & { slug: string } => !!s.slug
+  );
+  if (links.length === 0) return null;
+
   return (
-    <Link
-      href={`/sessions/${sessionSlug}/questions`}
-      className="flex items-center justify-between gap-4 bg-card border border-border rounded-lg px-5 py-4 hover:border-primary transition-colors"
-    >
+    <div className="bg-card border border-border rounded-lg px-5 py-4">
       <div className="flex items-start gap-3">
         <MessageSquare className="w-6 h-6 text-primary shrink-0 mt-0.5" />
         <div>
@@ -22,7 +32,19 @@ export function GeneralQuestionsBanner({
           </p>
         </div>
       </div>
-      <ArrowRight className="w-5 h-5 text-mirai-text-muted shrink-0" />
-    </Link>
+      <ul className="mt-3 flex flex-col divide-y divide-border border-t border-border">
+        {links.map((session) => (
+          <li key={session.slug}>
+            <Link
+              href={`/sessions/${session.slug}/questions`}
+              className="flex items-center justify-between gap-4 py-3 text-sm font-bold text-mirai-text hover:text-primary transition-colors"
+            >
+              <span>{formatSessionLabel(session)}</span>
+              <ArrowRight className="w-5 h-5 text-mirai-text-muted shrink-0" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

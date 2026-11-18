@@ -9,9 +9,11 @@ import { BillTag } from "./bill-tag";
 
 interface BillCardProps {
   bill: BillWithContent;
+  /** 「2026年 令和8年第3回定例会」など、いつの定例会の議案かを示す表記（任意） */
+  sessionLabel?: string;
 }
 
-export function BillCard({ bill }: BillCardProps) {
+export function BillCard({ bill, sessionLabel }: BillCardProps) {
   const displayTitle = bill.bill_content?.title;
   const summary = bill.bill_content?.summary;
   const submittedDate = resolveSubmittedDate(bill);
@@ -47,8 +49,10 @@ export function BillCard({ bill }: BillCardProps) {
         <div className="flex-1">
           <CardHeader>
             <div className="flex flex-col gap-3">
-              {bill.bill_number && (
+              {(sessionLabel || bill.bill_number) && (
                 <span className="text-xs font-medium text-muted-foreground">
+                  {sessionLabel}
+                  {sessionLabel && bill.bill_number && "　｜　"}
                   {bill.bill_number}
                 </span>
               )}

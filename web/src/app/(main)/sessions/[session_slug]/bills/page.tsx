@@ -48,7 +48,7 @@ export default async function SessionBillsRoute({
   return (
     <Container className="py-10">
       <div className="mb-6">
-        <GeneralQuestionsBanner sessionSlug={session_slug} />
+        <GeneralQuestionsBanner sessions={[session]} />
       </div>
       <SessionBillsPage session={session} bills={bills} />
     </Container>
