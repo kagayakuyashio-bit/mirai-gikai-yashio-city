@@ -51,6 +51,48 @@ const OVERALL: Record<Row["overall"], string> = {
   1: "☆ 遅れ",
   0: "対象外",
 };
+/** 評価項目の説明（市の外部評価報告書「表3 令和7年度事務事業評価結果」の記載による） */
+const CRITERIA: { item: string; meaning: string; options: string }[] = [
+  {
+    item: "必要性",
+    meaning: "その事業について、市が関わる必要性",
+    options: "非常に高い／高い／ある程度認められる",
+  },
+  {
+    item: "目標達成度",
+    meaning: "令和6年度の目標をどれだけ達成したか",
+    options:
+      "達成した（100％）／概ね達成した（80％以上）／達成できなかった（80％未満）",
+  },
+  {
+    item: "実施内容・方法",
+    meaning: "成果を上げたり費用を減らしたりするための見直しの余地",
+    options: "余地が大きい／ある程度余地がある／余地がない",
+  },
+  {
+    item: "公平性",
+    meaning: "i. 受益者が一部に偏っていないか　ii. 受益者負担を見直す余地",
+    options:
+      "i. 偏りがある／やや偏りがある／偏りがない　ii. 余地がある／余地がない／受益者負担がない",
+  },
+  {
+    item: "課題",
+    meaning: "評価の時点で認識されている問題・課題",
+    options: "課題はほとんどない／ある程度課題がある／大きな課題がある",
+  },
+  {
+    item: "総合評価",
+    meaning: "最終目標に対する進捗の状況",
+    options: "順調／概ね順調／遅れ",
+  },
+  {
+    item: "今後の方向性",
+    meaning: "計画期間を通じての今後の方向",
+    options:
+      "現状のまま継続／見直して継続／他事業と統合して継続／休止・廃止／終了・完了",
+  },
+];
+
 const DIRECTIONS = [
   "現状のまま継続",
   "見直して継続",
@@ -141,6 +183,73 @@ export default function EvaluationR7Page() {
             count: direction.get(k) ?? 0,
           }))}
         />
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-lg font-bold mb-3">評価のしくみ</h2>
+        <div className="rounded-lg border border-black bg-white p-4 text-sm leading-relaxed">
+          <p className="mb-2 font-bold">市の評価は、どのように行われているか</p>
+          <ul className="mb-4 list-disc pl-5 flex flex-col gap-1">
+            <li>
+              市の担当課が、自分たちの事業について評価シートに記入する「内部評価」です。事業の見直しや、職員の意識改革、市民への説明責任を果たすことなどを目的に行われています。
+            </li>
+            <li>
+              下の表の区分（A・B・Cなど）は、各担当課がその基準に照らして判断した結果です。点数を合計して決めるような計算式は、市の資料では公開されていません。
+            </li>
+            <li>
+              「目標達成度」は、区分の名前に達成割合の目安（100％／80％以上／80％未満）が付いています。
+            </li>
+            <li>
+              374事業のうち、外部の委員会（八潮市外部評価委員会）が検証したのは、事務事業評価の4事業と、指定管理者の年次事業評価の2事業です。
+            </li>
+          </ul>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-xs">
+              <thead>
+                <tr className="border-b border-border text-left text-mirai-text-secondary">
+                  <th className="px-2 py-2 font-medium">評価項目</th>
+                  <th className="px-2 py-2 font-medium">何を評価するか</th>
+                  <th className="px-2 py-2 font-medium">評価の区分</th>
+                </tr>
+              </thead>
+              <tbody>
+                {CRITERIA.map((c) => (
+                  <tr
+                    key={c.item}
+                    className="border-b border-border/60 align-top"
+                  >
+                    <td className="px-2 py-2 font-medium whitespace-nowrap">
+                      {c.item}
+                    </td>
+                    <td className="px-2 py-2">{c.meaning}</td>
+                    <td className="px-2 py-2">{c.options}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 mb-2 font-bold">このページでの数字の扱い</p>
+          <ul className="list-disc pl-5 flex flex-col gap-1">
+            <li>
+              市が公開している「事務事業評価
+              一覧表」（PDF）を機械で読み取り、そのまま表示しています。このサイトで、独自に点数を付けたり、順位をつけたりはしていません。
+            </li>
+            <li>
+              読み取った{rows.length}
+              事業の件数は、市の「集計表」と「外部評価報告書」の集計と、全項目で一致することを確認しています。
+            </li>
+            <li>
+              割合は、件数を{rows.length}
+              で割って、小数点以下を四捨五入したものです（足し合わせても100％にならない場合があります）。
+            </li>
+            <li>
+              総事業費は、一覧表の「総事業費」（事業費＋人件費）を、万円単位に四捨五入して表示しています。
+            </li>
+            <li>
+              「公平性」など、このページに載せていない評価項目は、市の一覧表や評価調書でご覧いただけます。
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section className="mb-8">
