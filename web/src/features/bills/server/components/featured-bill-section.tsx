@@ -6,11 +6,14 @@ interface FeaturedBillSectionProps {
   bills: BillWithContent[];
   /** 定例会ID → 「2026年 令和8年第3回定例会」などの表記 */
   sessionLabels?: Record<string, string>;
+  /** 見出しに添える会期名（例: 「令和8年9月定例会」） */
+  sessionName?: string;
 }
 
 export function FeaturedBillSection({
   bills,
   sessionLabels = {},
+  sessionName,
 }: FeaturedBillSectionProps) {
   if (bills.length === 0) {
     return null;
@@ -21,7 +24,7 @@ export function FeaturedBillSection({
       {/* セクションヘッダー */}
       <div className="flex flex-col gap-1.5">
         <h2 className="text-[22px] font-bold text-mirai-text leading-[1.48]">
-          注目の議案🔥
+          {sessionName ? `${sessionName} ` : ""}注目の議案🔥
         </h2>
         <p className="text-xs font-medium text-mirai-text-secondary leading-[1.67]">
           市議会に上程された注目議案

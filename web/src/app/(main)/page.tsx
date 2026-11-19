@@ -79,26 +79,11 @@ export default async function Home() {
       <Container className="">
         <div className="py-10">
           <main className="flex flex-col gap-16">
-            {/* 一般質問への入口 */}
-            <div className="flex flex-col gap-3">
-              <GeneralQuestionsBanner sessions={sessionsWithQuestions} />
-              <BudgetOverviewBox />
-            </div>
-
-            {/* 表示している議会（注目の議案・分野別の議案に共通） */}
-            {displaySessionName &&
-              (featuredBills.length > 0 || displaySessionBills.length > 0) && (
-                <p className="-mb-8">
-                  <span className="inline-block rounded-full bg-mirai-highlight px-3 py-1 text-sm font-bold text-mirai-text">
-                    {displaySessionName}を表示中
-                  </span>
-                </p>
-              )}
-
             {/* 注目の議案セクション */}
             <FeaturedBillSection
               bills={featuredBills}
               sessionLabels={sessionLabels}
+              sessionName={displaySessionName ?? undefined}
             />
 
             {/* 表示中の定例会の提出議案一覧（クリックで全議案を表示） */}
@@ -108,6 +93,12 @@ export default async function Home() {
                 bills={displaySessionBills}
               />
             )}
+
+            {/* 一般質問への入口 */}
+            <div className="flex flex-col gap-3">
+              <GeneralQuestionsBanner sessions={sessionsWithQuestions} />
+              <BudgetOverviewBox />
+            </div>
           </main>
         </div>
       </Container>

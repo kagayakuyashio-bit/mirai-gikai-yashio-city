@@ -33,7 +33,7 @@ export function PastSessionsSection({ sessions }: PastSessionsSectionProps) {
             過去の定例会
           </h2>
           <p className="text-xs text-mirai-text-secondary">
-            過去に開催された定例会の議案をご覧いただけます
+            過去に開催された定例会の議案等をご覧いただけます
           </p>
         </div>
 
