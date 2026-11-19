@@ -4,12 +4,13 @@ import { BudgetOverviewBox } from "@/components/top/budget-overview-box";
 import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { Hero } from "@/components/top/hero";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
+import { SessionBillsListBox } from "@/components/top/session-bills-list-box";
 import { TeamMirai } from "@/components/top/team-mirai";
 import { siteConfig } from "@/config/site.config";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import { BillDisclaimer } from "@/features/bills/client/components/bill-detail/bill-disclaimer";
-import { BillsByTagSection } from "@/features/bills/server/components/bills-by-tag-section";
 import { FeaturedBillSection } from "@/features/bills/server/components/featured-bill-section";
+import { getSessionBills } from "@/features/bills/server/loaders/get-session-bills";
 import { loadHomeData } from "@/features/bills/server/loaders/load-home-data";
 import type { BillWithContent } from "@/features/bills/shared/types";
 import { HomeChatClient } from "@/features/chat/client/components/home-chat-client";
@@ -47,6 +48,9 @@ export default async function Home() {
   const displaySessionName = displaySession
     ? formatSessionMonthLabel(displaySession)
     : null;
+  const displaySessionBills = displaySession
+    ? await getSessionBills(displaySession.id, currentDifficulty)
+    : [];
   const sessionsWithQuestions = (
     await Promise.all(
       sessionCandidates.map(async (s) =>
@@ -83,7 +87,7 @@ export default async function Home() {
 
             {/* 表示している議会（注目の議案・分野別の議案に共通） */}
             {displaySessionName &&
-              (featuredBills.length > 0 || billsByTag.length > 0) && (
+              (featuredBills.length > 0 || displaySessionBills.length > 0) && (
                 <p className="-mb-8">
                   <span className="inline-block rounded-full bg-mirai-highlight px-3 py-1 text-sm font-bold text-mirai-text">
                     {displaySessionName}を表示中
@@ -97,11 +101,13 @@ export default async function Home() {
               sessionLabels={sessionLabels}
             />
 
-            {/* タグ別議案一覧セクション */}
-            <BillsByTagSection
-              billsByTag={billsByTag}
-              sessionLabels={sessionLabels}
-            />
+            {/* 表示中の定例会の提出議案一覧（クリックで全議案を表示） */}
+            {displaySession && (
+              <SessionBillsListBox
+                session={displaySession}
+                bills={displaySessionBills}
+              />
+            )}
           </main>
         </div>
       </Container>
