@@ -44,7 +44,7 @@ export const siteConfig = {
     name: "荒川たかひろ" as string,
     contactUrl: "mailto:kagayakuyashio@gmail.com" as string,
     /** 利用規約の準拠法・管轄裁判所（第一審の専属的合意管轄） */
-    jurisdiction: "【仮】さいたま地方裁判所（公開前に要確認）" as string,
+    jurisdiction: "さいたま地方裁判所" as string,
   },
   /**
    * AI機能の有効/無効設定
